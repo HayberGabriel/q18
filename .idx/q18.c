@@ -11,6 +11,7 @@ char channel[TAMANHO_MENSAGEM];
 
 sem_t sem_espaco_livre;
 sem_t sem_item_disponivel;
+
 void enviar_sincrono(const char* dado_para_enviar) {
     if (sem_wait(&sem_espaco_livre) != 0) {
         perror("Erro em sem_wait(sem_espaco_livre)");
@@ -65,7 +66,8 @@ void* thread_remetente(void* arg) {
 }
 
 void* thread_destinatario(void* arg) {
-    char* msg_recebida;    int mensagens_esperadas = 4;
+    char* msg_recebida;    
+    int mensagens_esperadas = 4;
 
     for (int i = 0; i < mensagens_esperadas; i++) {
         printf("Destinatário: Esperando para receber...\n");
@@ -73,7 +75,8 @@ void* thread_destinatario(void* arg) {
         msg_recebida = receber_sincrono();
         if (msg_recebida != NULL) {
             printf("Destinatário: Processando '%s'.\n", msg_recebida);
-            fflush(stdout);            sleep(2);
+            fflush(stdout);            
+            sleep(2);
             free(msg_recebida);
         }
     }
