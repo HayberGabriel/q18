@@ -110,16 +110,20 @@ int main() {
         return 1;
     }
 
-    if (pthread_join(id_remetente, NULL) != 0) {    printf("Iniciando threads remetente e destinatário...\n");
-    fflush(stdout);
+    if (pthread_join(id_remetente, NULL) != 0) {    
+        printf("Iniciando threads remetente e destinatário...\n");
+        fflush(stdout);
         perror("Falha ao juntar thread remetente");
     }
+
     printf("Thread remetente finalizada.\n");
     fflush(stdout);
 
-    if (pthread_join(id_destinatario, NULL) != 0) {    pthread_cancel(id_destinatario);
+    if (pthread_join(id_destinatario, NULL) != 0) {    
+        pthread_cancel(id_destinatario);
         perror("Falha ao juntar thread destinatário");
     }
+    
     printf("Thread destinatário finalizada.\n");
     fflush(stdout);
 
